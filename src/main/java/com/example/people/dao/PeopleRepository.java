@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PeopleRepository extends PagingAndSortingRepository<Person, Integer> {
 	
+	Page<Person> findAll(Pageable pageable);
+	
 	Page<Person> findAllByFullName(String name, Pageable pageable);
 
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -28,11 +29,19 @@ public class PeopleController {
 	}
 	
 	
-	@GetMapping(value = "/getallpeople")
-	public ResponseEntity<Page<Person>> getAllPeople(@Param("fullname") String fullname, Pageable pageable) {
+	@GetMapping(value = "/getpeople")
+	public ResponseEntity<Page<Person>> getPeople(
+			@RequestParam(name="name", required = false) String fullname,
+			@RequestParam("page") Integer pageNo,
+			@RequestParam("size") Integer pageSize
+			) {
 		
-		log.info("Get all people");
+		log.info("Get people with name: {}, pageNo: {}, pageSize: {}", fullname, pageNo, pageSize);
 		
-		return ResponseEntity.ok(peopleService.getAllPeople(fullname, pageable));
+		if ("".equals(fullname)) {
+			return ResponseEntity.ok(peopleService.getPeople(fullname, pageNo, pageSize));
+		} else {
+			return ResponseEntity.ok(peopleService.getPeople(pageNo, pageSize));
+		}
 	}
 }
