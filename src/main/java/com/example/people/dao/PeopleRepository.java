@@ -12,6 +12,6 @@ public interface PeopleRepository extends PagingAndSortingRepository<Person, Int
 	
 	Page<Person> findAll(Pageable pageable);
 	
-	Page<Person> findAllByFullName(String name, Pageable pageable);
+	Page<Person> findAllByFullNameContainingIgnoreCase(String name, Pageable pageable);
 
 }

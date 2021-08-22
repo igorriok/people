@@ -25,7 +25,7 @@ public class PeopleService {
 	
 	public Page<Person> getPeople(Integer pageNo, Integer pageSize) {
 		
-		log.debug("Get people");
+		log.info("Get people");
 		
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 		
@@ -38,11 +38,11 @@ public class PeopleService {
 	
 	public Page<Person> getPeople(String name, Integer pageNo, Integer pageSize) {
 		
-		log.debug("Get people");
+		log.info("Get people by name");
 		
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 		
-		Page<Person> page = peopleRepository.findAllByFullName(name, pageable);
+		Page<Person> page = peopleRepository.findAllByFullNameContainingIgnoreCase(name, pageable);
 		
 		log.info("Page: {}", page);
 		

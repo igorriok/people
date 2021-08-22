@@ -33,12 +33,11 @@ public class PeopleController {
 	public ResponseEntity<Page<Person>> getPeople(
 			@RequestParam(name="name", required = false) String fullname,
 			@RequestParam("page") Integer pageNo,
-			@RequestParam("size") Integer pageSize
-			) {
+			@RequestParam("size") Integer pageSize) {
 		
 		log.info("Get people with name: {}, pageNo: {}, pageSize: {}", fullname, pageNo, pageSize);
 		
-		if ("".equals(fullname)) {
+		if (fullname != null && !"".equals(fullname)) {
 			return ResponseEntity.ok(peopleService.getPeople(fullname, pageNo, pageSize));
 		} else {
 			return ResponseEntity.ok(peopleService.getPeople(pageNo, pageSize));
