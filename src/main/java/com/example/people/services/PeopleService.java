@@ -26,7 +26,7 @@ public class PeopleService {
 	@Cacheable("peopleCache")
 	public Page<Person> getPage(String name, Integer pageNo, Integer pageSize) {
 		
-		log.info("Get people by name");
+		log.debug("Get people by name");
 		
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 		
