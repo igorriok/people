@@ -5,6 +5,7 @@ import com.example.people.entities.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,21 +23,8 @@ public class PeopleService {
 		this.peopleRepository = peopleRepository;
 	}
 	
-	
-	public Page<Person> getPeople(Integer pageNo, Integer pageSize) {
-		
-		log.info("Get people");
-		
-		Pageable pageable = PageRequest.of(pageNo, pageSize);
-		
-		Page<Person> page = peopleRepository.findAll(pageable);
-		
-		log.info("Page: {}", page.toString());
-		
-		return page;
-	}
-	
-	public Page<Person> getPeople(String name, Integer pageNo, Integer pageSize) {
+	@Cacheable("peopleCache")
+	public Page<Person> getPage(String name, Integer pageNo, Integer pageSize) {
 		
 		log.info("Get people by name");
 		
